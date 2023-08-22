@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler  
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import LabelEncoder
 from sklearn import metrics
 
 # Dataset contains age, sex, BMI, how many children, if person smokes, region, and medical costs.
@@ -17,34 +18,19 @@ from sklearn import metrics
 data = pd.read_csv("datasets\insurance.csv")
 print(data.head)
 
-data_frame_insurance = pd.DataFrame(data)
-# print(data_frame_insurance)
-# print(data_frame_insurance.info)
-# print(data_frame_insurance.describe)
-
-# Show histogram of data.
-# data.hist(bins = 60, figsize=(20, 15))
-# plt.show()
-
 # Convert categorical features into numerical features, as ML models can't work with categorical figs
-# (e.g., red, big, True, etc). We want to encode the columns with the categorical values using one-hot encoding.
-data_frame_insurance_converted = pd.get_dummies(data_frame_insurance, 
-                                                columns = ['sex', 'smoker', 'region'], 
-                                                drop_first = True)
-
-data_frame_insurance_converted = data_frame_insurance_converted.astype(int)
-# print(data_frame_insurance_converted)
-
-cols = ['age', 'bmi', 'children', 'sex_male', 'smoker_yes', 'region_northwest', 'region_southeast', 'region_southwest']
+# (e.g., red, big, True, etc).
+label_encoder = LabelEncoder()
+data["sex"] = label_encoder.fit_transform(data["sex"])
+data["smoker"] = label_encoder.fit_transform(data["smoker"])
+data["region"] = label_encoder.fit_transform(data["region"])
 
 # Select X and Y.
-X = pd.DataFrame(data_frame_insurance_converted, columns = cols)
-Y = data_frame_insurance_converted['charges']
+X = data[["age", "sex", "bmi", "children", "smoker", "region"]]
+Y = data["charges"]
 
 # Split data into train and test set.
-x_train, x_test, y_train, y_test = train_test_split(X, Y, 
-                                                    train_size = 0.7, 
-                                                    test_size = 0.3)
+x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size = 0.2, random_state = 42)
 
 # Build model.
 model = LinearRegression()

@@ -32,7 +32,6 @@ x_test_scaled = scaler.transform(x_test)
 # Build model.
 model = DecisionTreeRegressor(max_depth = 5, random_state = 42)
 
-
 # Train the model.
 model.fit(x_train_scaled, y_train)
 
