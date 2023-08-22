@@ -14,8 +14,8 @@ from sklearn import metrics
 # We're attempting to predict the insurance costs.
 
 # Read dataset using pandas.
-data = pd.read_csv("..\datasets\insurance.csv")
-# print(data.head)
+data = pd.read_csv("datasets\insurance.csv")
+print(data.head)
 
 data_frame_insurance = pd.DataFrame(data)
 # print(data_frame_insurance)
