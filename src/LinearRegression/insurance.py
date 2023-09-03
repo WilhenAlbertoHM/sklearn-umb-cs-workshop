@@ -1,5 +1,5 @@
 """ Cited source:
-    - https://www.kaggle.com/code/sadafpj/insurance-prediction-using-regression-regulation
+    - https://www.kaggle.com/datasets/mirichoi0218/insurance
 """
 
 import pandas as pd
